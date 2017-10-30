@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+  <title>Cumulative Analytics for YouTube</title>
+  <link type="text/css" rel="stylesheet" href="index.css">
+  
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script type="text/javascript" src="//www.google.com/jsapi"></script>
+  <script type="text/javascript" src="index.js"></script>
+  <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=onJSClientLoad"></script>
+  
+  <link href="https://fonts.googleapis.com/css?family=Averia+Serif+Libre:400i,700i|Source+Sans+Pro" rel="stylesheet">
+</head>
+<body>
+  <div id="login-container" class="pre-auth">This application requires access to your YouTube account.
+    Please <a href="#" id="login-link">authorize</a> to continue.
+  </div>
+  <div class="post-auth">
+    <div id="message"></div>
+    <div class="headline">
+      <div class='h-big'>CUMULATIVE ANALYTICS</div>
+      <div class='h-small'>for YouTube</div>
+    </div>
+    <div id="channel-details">
+      <div id="cd1">
+        <img id="c-img"/>
+      </div>
+      <div id="cd2">
+        <a id="c-link" href="#" target="_blank">
+          <div id="c-name"></div>
+          <div id="c-tag"></div>
+        </a>
+      </div>
+    </div>
+    <div id="channel-stats">
+      <div class='stat'>
+        <div class='s-label'>Videos</div>
+        <div class='s-value' id='s-vids'></div>
+      </div>
+      <div class='stat'>
+        <div class='s-label'>Subscribers</div>
+        <div class='s-value' id='s-subs'></div>
+      </div>
+      <div class='stat'>
+        <div class='s-label'>Views</div>
+        <div class='s-value' id='s-views'></div>
+      </div>
+      <div class='disc'>
+      *The view count shown above might differ from the view count in analytics due to how YouTube counts views.
+      </div>
+    </div>
+    <div class='spacer'></div>
+    <div class="subheadline">
+      <div class='h-big'>VIEWS</div>
+      <div class='h-small'>lifetime</div>
+    </div>
+    <div id="chart"></div>
+  </div>
+</body>
+</html>

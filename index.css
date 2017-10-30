@@ -1,0 +1,151 @@
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.pre-auth {
+  display: none;
+}
+
+.post-auth {
+  display: none;
+}
+
+.spacer {
+  height: 30px;
+}
+
+.headline {
+  box-sizing: border-box;
+  font-family: 'Averia Serif Libre', cursive;
+  text-align: center;
+  padding: 5px;
+  margin: 20px 5px 10px 5px;
+}
+
+.headline .h-big {
+  font-style: italic;
+  font-weight: 700;
+  font-size: 28px;
+}
+
+.headline .h-small {
+  font-style: italic;
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.subheadline {
+  box-sizing: border-box;
+  font-family: 'Averia Serif Libre', cursive;
+  text-align: center;
+  padding: 0px 5px;
+  margin: 0px 5px;
+}
+
+.subheadline .h-big {
+  font-style: italic;
+  font-weight: 700;
+  font-size: 26px;
+}
+
+.subheadline .h-small {
+  font-style: italic;
+  font-weight: 400;
+  font-size: 18px;
+}
+
+#channel-details {
+  box-sizing: border-box;
+  max-width: 320px;
+  margin: 0px auto;
+  margin-top: 20px;
+  padding: 10px;
+  border-top: solid 2px #303030;
+  font-family: 'Averia Serif Libre', cursive;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+#cd1 {
+  order: 1;
+  padding: 10px;
+}
+
+#cd2 {
+  order: 2;
+  padding: 10px;
+  text-align: center;
+}
+
+#c-img {
+  height: 88px;
+  width: 88px;
+}
+
+#c-name {
+  font-style: italic;
+  font-weight: 700;
+  font-size: 20px;
+}
+#c-tag {
+  font-style: italic;
+  font-weight: 400;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#c-link {
+  text-decoration: none;
+  color: #303030;
+}
+
+#c-link:hover {
+  color: black;
+}
+
+#channel-stats {
+  box-sizing: border-box;
+  max-width: 320px;
+  margin: 0px auto;
+  margin-bottom: 20px;
+  padding: 10px;
+  border-bottom: solid 2px #303030;
+  font-family: 'Averia Serif Libre', cursive;
+}
+.stat {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: no-wrap;
+}
+
+.stat .s-label {
+  order: 1;
+  width: 100px;
+  text-align: left;
+}
+
+.stat .s-value {
+  order: 2;
+  width: 100px;
+  flex: 0 1 auto;
+  text-align: right;
+}
+
+.disc {
+  font-size: 12px;
+  font-weight: 400;
+  margin: 20px 5px 5px 5px;
+}
+
+#chart {
+  max-width: 960px;
+  width: 100%;
+  height: 400px;
+  margin: 0 auto;
+  margin-bottom: 1em;
+}
