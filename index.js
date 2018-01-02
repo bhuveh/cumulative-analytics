@@ -97,7 +97,6 @@
         channelId = response.items[0].id;
         displayChannelProfile(response);
         displayChannelAnalytics();
-        displayChannelAnalyticsByVideo();
       }
     });
   }
