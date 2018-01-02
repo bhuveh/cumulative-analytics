@@ -71,7 +71,7 @@ body {
   margin: 0px auto;
   padding: 0px;
   display: flex;
-  justify-content: left;
+  justify-content: center;
   align-items: center;
   flex-wrap: wrap;
 }

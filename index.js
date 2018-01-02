@@ -128,7 +128,23 @@
       var startDay = new Date(2005,1,14);
       //var lastMonth = new Date(today.getTime() - ONE_MONTH_IN_MILLISECONDS);
 
-      var request = gapi.client.youtubeAnalytics.reports.query({
+      var request1 = gapi.client.youtubeAnalytics.reports.query({
+        // The start-date and end-date parameters must be YYYY-MM-DD strings.
+        'start-date': formatDateString(startDay),
+        'end-date': formatDateString(today),
+        // At this time, you need to explicitly specify channel==channelId.
+        // See https://developers.google.com/youtube/analytics/v1/#ids
+        ids: 'channel==' + channelId,
+        dimensions: 'day',
+        sort: 'day',
+        // See https://developers.google.com/youtube/analytics/v1/available_reports
+        // for details about the different filters and metrics you can request
+        // if the "dimensions" parameter value is "day".
+        metrics: 'views,estimatedMinutesWatched'
+        //filters: 'video==' + videoId
+      });
+      
+      var request2 = gapi.client.youtubeAnalytics.reports.query({
         // The start-date and end-date parameters must be YYYY-MM-DD strings.
         'start-date': formatDateString(startDay),
         'end-date': formatDateString(today),
@@ -144,14 +160,14 @@
         //filters: 'video==' + videoId
       });
 
-      request.execute(function(response) {
+      request1.execute(function(response) {
         // This function is called regardless of whether the request succeeds.
         // The response contains YouTube Analytics data or an error message.
         if ('error' in response) {
           displayMessage(response.error.message);
         } else {
           //console.log(response);
-          displayChart(channelId, response);
+          displayChart(response);
         }
       });
     } else {
@@ -180,7 +196,7 @@
   }
 
   // Call the Google Chart Tools API to generate a chart of Analytics data.
-  function displayChart(videoId, response) {
+  function displayChart(response) {
     if ('rows' in response) {
       hideMessage();
 
@@ -189,18 +205,22 @@
       // We need these column titles as a simple array, so we call jQuery.map()
       // to get each element's "name" property and create a new array that only
       // contains those values.
-      var columns = $.map(response.columnHeaders, function(item) {
-        return item.name;
-      });
+      //var columns = $.map(response.columnHeaders, function(item) {
+        //return item.name;
+      //});
+      var columns = ['Date', 'Views', 'Minutes']
       var newArr = [];
-      var tot = 0;
+      var totV = 0;
+      var totM = 0;
       response.rows.forEach(function(row){
         var dat = row[0];
         //Date is a yyyy-mm-dd string.
         dat = new Date(dat);
         var vi = row[1];
-        tot = tot + vi;
-        newArr.push([dat, tot]);
+        var mi = row[2];
+        totV = totV + vi;
+        totM = totM + mi;
+        newArr.push([dat, totV, totM]);
       });
       // The google.visualization.arrayToDataTable() function wants an array
       // of arrays. The first element is an array of column titles, calculated
@@ -211,6 +231,8 @@
       //var chartDataArray = [columns].concat(response.rows);
       var chartDataArray = [columns].concat(newArr);
       var chartDataTable = google.visualization.arrayToDataTable(chartDataArray);
+      var formatter = new google.visualization.DateFormat({pattern: 'MMM d, yyyy'});
+      formatter.format(chartDataTable, 0);
 
       var chart = new google.visualization.LineChart(document.getElementById('chart'));
       chart.draw(chartDataTable, {
@@ -219,7 +241,18 @@
         legend: 'none',
         theme: 'maximized',
         series: {
-          0: { color: '#283f63' }
+          0: { color: '#283f63',
+              targetAxisIndex: 0 },
+          1: { color: '#ffa665',
+              targetAxisIndex: 1 }
+        },
+        vAxes: {
+          0: {
+            textStyle: { color: '#3d5c8c' },
+          },
+          1: {
+            textStyle: { color: '#ffa665' }
+          }
         },
         animation: {
           startup: true,
@@ -228,7 +261,7 @@
         },
         fontName: 'Open Sans',
         hAxis: {
-          format: 'MMM d, yyyy',
+          format: "MMM ''yy",
           textStyle: {
             color: '#3d5c8c',
             fontSize: 10
@@ -240,7 +273,6 @@
         },
         vAxis: {
           textStyle: {
-            color: '#3d5c8c',
             fontSize: 10
           },
           gridlines: {
