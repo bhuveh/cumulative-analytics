@@ -85,7 +85,7 @@
       // you want to retrieve the currently authenticated user's channel.
       mine: true,
       part: 'snippet,statistics',
-      fields: 'items(id,snippet(title,description,customUrl,thumbnails(default)),statistics(subscriberCount,videoCount,viewCount))'
+      fields: 'items(id,snippet(title,description,customUrl,thumbnails(high)),statistics(subscriberCount,videoCount,viewCount))'
     });
 
     request.execute(function(response) {
@@ -97,6 +97,7 @@
         channelId = response.items[0].id;
         displayChannelProfile(response);
         displayChannelAnalytics();
+        displayChannelAnalyticsByVideo();
       }
     });
   }
@@ -108,7 +109,7 @@
       $('#c-name').text(response.items[0].snippet.title);
       $('#c-tag').text(response.items[0].snippet.description);
       $('#c-link').attr('href', 'https://www.youtube.com/' + response.items[0].snippet.customUrl)
-      $('#c-img').attr('src',response.items[0].snippet.thumbnails.default.url);
+      $('#c-img').attr('src',response.items[0].snippet.thumbnails.high.url);
       $('#s-vids').text(response.items[0].statistics.videoCount);
       $('#s-subs').text(response.items[0].statistics.subscriberCount);
       $('#s-views').text(response.items[0].statistics.viewCount);
@@ -196,6 +197,8 @@
       var tot = 0;
       response.rows.forEach(function(row){
         var dat = row[0];
+        //Date is a yyyy-mm-dd string.
+        dat = new Date(dat);
         var vi = row[1];
         tot = tot + vi;
         newArr.push([dat, tot]);
@@ -215,15 +218,37 @@
         // Additional options can be set if desired as described at:
         // https://developers.google.com/chart/interactive/docs/reference#visdraw
         legend: 'none',
+        theme: 'maximized',
         series: {
-          0: { color: '#303030' }
+          0: { color: '#283f63' }
         },
         animation: {
           startup: true,
           duration: 1000,
           easing: 'inAndOut'
         },
-        fontName: 'Source Sans Pro'
+        fontName: 'Open Sans',
+        hAxis: {
+          format: 'MMM d, yyyy',
+          textStyle: {
+            color: '#3d5c8c',
+            fontSize: 10
+          },
+          gridlines: {
+            color: '#fff4ec'
+          },
+          baselineColor: '#fff4ec'
+        },
+        vAxis: {
+          textStyle: {
+            color: '#3d5c8c',
+            fontSize: 10
+          },
+          gridlines: {
+            color: '#fff4ec'
+          },
+          baselineColor: '#fff4ec'
+        }
       });
     } else {
       displayMessage('No data available for channel ' + channelId);

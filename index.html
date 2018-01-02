@@ -9,7 +9,8 @@
   <script type="text/javascript" src="index.js"></script>
   <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=onJSClientLoad"></script>
   
-  <link href="https://fonts.googleapis.com/css?family=Averia+Serif+Libre:400i,700i|Source+Sans+Pro" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Exo:900|Open+Sans" rel="stylesheet">
+  
 </head>
 <body>
   <div id="login-container" class="pre-auth">This application requires access to your YouTube account.
@@ -17,9 +18,11 @@
   </div>
   <div class="post-auth">
     <div id="message"></div>
-    <div class="headline">
-      <div class='h-big'>CUMULATIVE ANALYTICS</div>
-      <div class='h-small'>for YouTube</div>
+    <div class='h-wrapper'>
+      <div class="headline">
+        <div class='h-big'>CUMULATIVE ANALYTICS</div>
+        <div class='h-small'>for YouTube</div>
+      </div>
     </div>
     <div id="channel-details">
       <div id="cd1">
@@ -33,26 +36,30 @@
       </div>
     </div>
     <div id="channel-stats">
+      <div class="stat-title">
+        CHANNEL STATS
+      </div>
       <div class='stat'>
-        <div class='s-label'>Videos</div>
         <div class='s-value' id='s-vids'></div>
+        <div class='s-label'>videos</div>
       </div>
       <div class='stat'>
-        <div class='s-label'>Subscribers</div>
         <div class='s-value' id='s-subs'></div>
+        <div class='s-label'>subscribers</div>
       </div>
       <div class='stat'>
-        <div class='s-label'>Views</div>
         <div class='s-value' id='s-views'></div>
+        <div class='s-label'>views<sup>*</sup></div>
       </div>
       <div class='disc'>
-      *The view count shown above might differ from the view count in analytics due to how YouTube counts views.
+      *The view count shown above might differ from the view count in the graphs due to how YouTube counts views.
       </div>
     </div>
-    <div class='spacer'></div>
-    <div class="subheadline">
-      <div class='h-big'>VIEWS</div>
-      <div class='h-small'>lifetime</div>
+    <div class='s-wrapper'>
+      <div class="subheadline">
+        <div class='h-big'>LIFETIME VIEWS</div>
+        <!--div class='h-small'>lifetime</div-->
+      </div>
     </div>
     <div id="chart"></div>
   </div>

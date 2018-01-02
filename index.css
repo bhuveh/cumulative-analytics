@@ -1,97 +1,115 @@
 body {
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  color: #FAFAFA;
 }
 
 .pre-auth {
   display: none;
 }
-
 .post-auth {
   display: none;
 }
-
 .spacer {
   height: 30px;
 }
 
+.h-wrapper {
+  width: 100%;
+  margin-top: 80px;
+  margin-bottom: 16px;
+  text-align: center;
+}
 .headline {
+  width: 100%;
   box-sizing: border-box;
-  font-family: 'Averia Serif Libre', cursive;
-  text-align: center;
-  padding: 5px;
-  margin: 20px 5px 10px 5px;
+  max-width: 420px;
+  text-align: right;
+  padding: 20px 30px;
+  display: inline-block;
+  background-color: #ffa665;
 }
-
 .headline .h-big {
-  font-style: italic;
-  font-weight: 700;
+  font-weight: 900;
   font-size: 28px;
+  font-family: 'Exo', sans-serif;
 }
-
 .headline .h-small {
-  font-style: italic;
   font-weight: 400;
-  font-size: 20px;
+  font-size: 16px;
 }
 
-.subheadline {
-  box-sizing: border-box;
-  font-family: 'Averia Serif Libre', cursive;
+.s-wrapper {
+  width: 100%;
+  margin-top: 40px;
+  margin-bottom: 16px;
   text-align: center;
-  padding: 0px 5px;
-  margin: 0px 5px;
 }
-
+.subheadline {
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 420px;
+  text-align: right;
+  padding: 20px 30px;
+  display: inline-block;
+  background-color: #ffa665;
+}
 .subheadline .h-big {
-  font-style: italic;
-  font-weight: 700;
-  font-size: 26px;
+  font-weight: 900;
+  font-size: 24px;
+  font-family: 'Exo', sans-serif;
+  line-height: 30px;
 }
-
 .subheadline .h-small {
-  font-style: italic;
-  font-weight: 400;
-  font-size: 18px;
+  font-size: 14px;
 }
 
 #channel-details {
   box-sizing: border-box;
-  max-width: 320px;
+  width: 100%;
+  max-width: 420px;
   margin: 0px auto;
-  margin-top: 20px;
-  padding: 10px;
-  border-top: solid 2px #303030;
-  font-family: 'Averia Serif Libre', cursive;
+  padding: 0px;
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
   flex-wrap: wrap;
 }
-
 #cd1 {
   order: 1;
-  padding: 10px;
+  margin: 0;
+  margin-right: 16px;
+  border: solid 6px #283f63;
+  width: 120px;
+  height: 120px;
+  padding: 0px;
+  flex: 0 0 auto;
 }
-
 #cd2 {
   order: 2;
-  padding: 10px;
-  text-align: center;
+  text-align: left;
+  background-color: #283f63;
+  height: 132px;
+  flex: 1 0 auto;
+  box-sizing: border-box;
+  padding: 20px;
 }
-
 #c-img {
-  height: 88px;
-  width: 88px;
+  height: 120px;
+  width: 120px;
 }
-
 #c-name {
-  font-style: italic;
-  font-weight: 700;
-  font-size: 20px;
+  font-weight: 900;
+  font-size: 24px;
+  margin-top: 40px;
+  line-height: 30px;
+  text-transform: uppercase;
+  font-family: 'Exo', sans-serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 #c-tag {
-  font-style: italic;
-  font-weight: 400;
   font-size: 14px;
   white-space: nowrap;
   overflow: hidden;
@@ -99,53 +117,61 @@ body {
 }
 #c-link {
   text-decoration: none;
-  color: #303030;
+  color: #FAFAFA;
 }
-
 #c-link:hover {
-  color: black;
+  color: #ffa665;
 }
 
 #channel-stats {
   box-sizing: border-box;
-  max-width: 320px;
+  max-width: 420px;
   margin: 0px auto;
-  margin-bottom: 20px;
-  padding: 10px;
-  border-bottom: solid 2px #303030;
-  font-family: 'Averia Serif Libre', cursive;
+  margin-top: 16px;
+  padding: 20px 30px;
+  background-color: #3d5c8c;
+}
+.stat-title {
+  font-weight: 900;
+  font-size: 24px;
+  font-family: 'Exo', sans-serif;
+  margin-bottom: 8px;
+  text-align: center;
 }
 .stat {
   width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: baseline;
   flex-wrap: no-wrap;
 }
-
 .stat .s-label {
-  order: 1;
-  width: 100px;
-  text-align: left;
-}
-
-.stat .s-value {
   order: 2;
-  width: 100px;
+  width: 50%;
+  margin-left: 10px;
+  flex: 1 0 auto;
+  font-size: 14px;
+  text-align: left;
+  line-height: 32px;
+}
+.stat .s-value {
+  order: 1;
+  width: 50%;
   flex: 0 1 auto;
+  font-family: 'Exo', sans-serif;
+  font-size: 24px;
   text-align: right;
 }
-
 .disc {
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 400;
-  margin: 20px 5px 5px 5px;
+  margin: 8px 5px 5px 5px;
 }
 
 #chart {
-  max-width: 720px;
+  max-width: 420px;
   width: 100%;
-  height: 400px;
+  height: 360px;
   margin: 0 auto;
-  margin-bottom: 1em;
+  margin-bottom: 80px;
 }
