@@ -39,6 +39,11 @@ body {
   font-size: 16px;
 }
 
+.slider {
+  max-width: 420px;
+  margin: 0 auto;
+}
+
 .s-wrapper {
   width: 100%;
   margin-top: 40px;
@@ -46,9 +51,8 @@ body {
   text-align: center;
 }
 .subheadline {
-  width: 100%;
+  width: 420px;
   box-sizing: border-box;
-  max-width: 420px;
   text-align: right;
   padding: 20px 30px;
   display: inline-block;
@@ -170,9 +174,22 @@ body {
 }
 
 #chart1, #chart2 {
-  max-width: 420px;
-  width: 100%;
+  width: 420px;
   height: 360px;
   margin: 0 auto;
   margin-bottom: 80px;
+}
+
+.slick-prev:before,
+.slick-next:before
+{
+    color:#283f63;
+}
+.slick-next
+{
+    right: -30px;
+}
+.slick-prev
+{
+    left: -30px;
 }

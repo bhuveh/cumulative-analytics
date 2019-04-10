@@ -2,13 +2,9 @@
 <html>
 <head>
   <title>Cumulative Analytics for YouTube</title>
+  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
   <link type="text/css" rel="stylesheet" href="index.css">
-  
-  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-  <script type="text/javascript" src="//www.google.com/jsapi"></script>
-  <script type="text/javascript" src="index.js"></script>
-  <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=onJSClientLoad"></script>
-  
   <link href="https://fonts.googleapis.com/css?family=Exo:900|Open+Sans" rel="stylesheet">
 </head>
 <body>
@@ -54,20 +50,42 @@
       *The view count shown above might differ from the view count in the graphs due to how YouTube counts views.
       </div>
     </div>
-    <div class='s-wrapper'>
-      <div class="subheadline">
-        <div class='h-big'>VIEWS &amp; MINUTES</div>
-        <div class='h-small'>lifetime</div>
+    <div class='slider'>
+      <div class='slide'>
+        <div class='s-wrapper'>
+          <div class="subheadline">
+            <div class='h-big'>VIEWS &amp; MINUTES</div>
+            <div class='h-small'>lifetime</div>
+          </div>
+        </div>
+        <div id="chart1"></div>
       </div>
-    </div>
-    <div id="chart1"></div>
-    <div class='s-wrapper'>
-      <div class="subheadline">
-        <div class='h-big'>VIEWS &amp; MINUTES</div>
-        <div class='h-small'>last 30 days</div>
+      <div class='slide'>
+        <div class='s-wrapper'>
+          <div class="subheadline">
+            <div class='h-big'>VIEWS &amp; MINUTES</div>
+            <div class='h-small'>last 30 days</div>
+          </div>
+        </div>
+        <div id="chart2"></div>
       </div>
-    </div>
-    <div id="chart2"></div>
+    </div>    
   </div>
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script type="text/javascript" src="//www.google.com/jsapi"></script>
+  <script type="text/javascript" src="index.js"></script>
+  <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=onJSClientLoad"></script>
+  <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('.slider').slick({
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 5000
+      });
+    });
+  </script>
 </body>
 </html>
