@@ -90,9 +90,10 @@ body {
   text-align: left;
   background-color: #283f63;
   height: 132px;
-  flex: 1 0 auto;
+  flex: 0 0 auto;
   box-sizing: border-box;
   padding: 20px;
+  width: 272px;
 }
 #c-img {
   height: 120px;
@@ -168,7 +169,7 @@ body {
   margin: 8px 5px 5px 5px;
 }
 
-#chart {
+#chart1, #chart2 {
   max-width: 420px;
   width: 100%;
   height: 360px;
