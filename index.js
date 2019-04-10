@@ -132,9 +132,9 @@
       // To use a different date range, modify the ONE_MONTH_IN_MILLISECONDS
       // variable to a different millisecond delta as desired.
       var today = new Date();
-      //var lastMonth = new Date(today.getTime() - ONE_MONTH_IN_MILLISECONDS);
+      var lastMonth = new Date(today.getTime() - 2592000000);
 
-      // Request gets views, minutes, subscribers.
+      // Request gets lifetime views, minutes, subscribers.
       var request1 = gapi.client.youtubeAnalytics.reports.query({
         // The startDate and endDate parameters must be YYYY-MM-DD strings.
         'startDate': formatDateString(startDay),
@@ -150,10 +150,27 @@
         metrics: 'views,estimatedMinutesWatched,subscribersGained,subscribersLost'
         //filters: 'video==' + videoId
       });
+
+      // Request gets lifetime views, minutes, subscribers.
+      var request2 = gapi.client.youtubeAnalytics.reports.query({
+        // The startDate and endDate parameters must be YYYY-MM-DD strings.
+        'startDate': formatDateString(lastMonth),
+        'endDate': formatDateString(today),
+        // At this time, you need to explicitly specify channel==channelId.
+        // See https://developers.google.com/youtube/analytics/v2/#ids
+        ids: 'channel==' + channelId,
+        dimensions: 'day',
+        sort: 'day',
+        // See https://developers.google.com/youtube/analytics/v2/available_reports
+        // for details about the different filters and metrics you can request
+        // if the "dimensions" parameter value is "day".
+        metrics: 'views,estimatedMinutesWatched,subscribersGained,subscribersLost'
+        //filters: 'video==' + videoId
+      });
       
       startDay = new Date(2018,1,1);
 
-      var request2 = gapi.client.youtubeAnalytics.reports.query({
+      var request3 = gapi.client.youtubeAnalytics.reports.query({
         // The startDate and endDate parameters must be YYYY-MM-DD strings.
         'startDate': formatDateString(startDay),
         'endDate': formatDateString(today),
@@ -178,7 +195,7 @@
           displayMessage(response.error.message);
         } else {
           //console.log(response);
-          displayChart(response);
+          displayChart(response, 'chart1');
         }
       });
       
@@ -189,7 +206,8 @@
         if ('error' in response) {
           console.log(response.error.message);
         } else {
-          // console.log(response);
+          //console.log(response);
+          displayChart(response, 'chart2');
         }
       });
     } else {
@@ -218,10 +236,10 @@
   }
 
   // Call the Google Chart Tools API to generate a chart of Analytics data.
-  function displayChart(response) {
+  function displayChart(response, el) {
     if ('rows' in response) {
       hideMessage();
-      //console.log(response);
+      // console.log(response);
       // The columnHeaders property contains an array of objects representing
       // each column's title -- e.g.: [{name:"day"},{name:"views"}]
       // We need these column titles as a simple array, so we call jQuery.map()
@@ -231,22 +249,20 @@
         //return item.name;
       //});
       var ins = [-1, -1, -1, -1, -1];
-      var columns1 = [];
-      //var columns2 = [];
+      var columns = [];
       
       response.columnHeaders.forEach(function(item, ind) {
         if (item.name == 'day') {
           ins[0] = ind;
-          columns1.push('Day');
-          //columns2.push('Day'); 
+          columns.push('Day');
         }
         else if (item.name == 'views') {
           ins[1] = ind;
-          columns1.push('Views'); 
+          columns.push('Views'); 
         }
         else if (item.name == 'estimatedMinutesWatched') {
           ins[2] = ind;
-          columns1.push('Minutes'); 
+          columns.push('Minutes'); 
         }
         else if (item.name == 'subscribersGained') {
           ins[3] = ind;
@@ -255,25 +271,19 @@
           ins[4] = ind;
         };
       });
-      //columns2.push("Subscribers");
       
-      var chart1 = [];
-      //var chart2 = [];
+      var chart = [];
       var totV = 0;
       var totM = 0;
-      //var totS = 0;
       response.rows.forEach(function(row){
         var dat = row[0];
         //Date is a yyyy-mm-dd string.
         dat = new Date(dat);
         var vi = row[1];
         var mi = row[2];
-        //var su = row[3] - row[4];
         totV = totV + vi;
         totM = totM + mi;
-        //totS = totS + su;
-        chart1.push([dat, totV, totM]);
-        //chart2.push([dat, totS]);
+        chart.push([dat, totV, totM]);
       });
       // The google.visualization.arrayToDataTable() function wants an array
       // of arrays. The first element is an array of column titles, calculated
@@ -283,13 +293,13 @@
       // See https://developers.google.com/chart/interactive/docs/datatables_dataviews#arraytodatatable
       //var chartDataArray = [columns].concat(response.rows);
 
-      var chartDataArray1 = [columns1].concat(chart1);
-      var chartDataTable1 = google.visualization.arrayToDataTable(chartDataArray1);
+      var chartDataArray = [columns].concat(chart);
+      var chartDataTable = google.visualization.arrayToDataTable(chartDataArray);
       var formatter = new google.visualization.DateFormat({pattern: 'MMM d, yyyy'});
-      formatter.format(chartDataTable1, 0);
+      formatter.format(chartDataTable, 0);
 
-      var chart1 = new google.visualization.LineChart(document.getElementById('chart1'));
-      chart1.draw(chartDataTable1, {
+      var chart = new google.visualization.LineChart(document.getElementById(el));
+      chart.draw(chartDataTable, {
         // Additional options can be set if desired as described at:
         // https://developers.google.com/chart/interactive/docs/reference#visdraw
         legend: 'none',
@@ -336,54 +346,6 @@
         }
       });
       
-      /*
-      var chartDataArray2 = [columns2].concat(chart2);
-      var chartDataTable2 = google.visualization.arrayToDataTable(chartDataArray2);
-      formatter.format(chartDataTable2, 0);
-      
-      var chart2 = new google.visualization.LineChart(document.getElementById('chart2'));
-      chart2.draw(chartDataTable2, {
-        // Additional options can be set if desired as described at:
-        // https://developers.google.com/chart/interactive/docs/reference#visdraw
-        legend: 'none',
-        theme: 'maximized',
-        series: {
-          0: { color: '#283f63',
-              targetAxisIndex: 0 }
-        },
-        vAxes: {
-          0: {
-            textStyle: { color: '#3d5c8c' },
-          }
-        },
-        animation: {
-          startup: true,
-          duration: 1000,
-          easing: 'inAndOut'
-        },
-        fontName: 'Open Sans',
-        hAxis: {
-          format: "MMM ''yy",
-          textStyle: {
-            color: '#3d5c8c',
-            fontSize: 10
-          },
-          gridlines: {
-            color: '#fff4ec'
-          },
-          baselineColor: '#fff4ec'
-        },
-        vAxis: {
-          textStyle: {
-            fontSize: 10
-          },
-          gridlines: {
-            color: '#fff4ec'
-          },
-          baselineColor: '#fff4ec'
-        }
-      });
-      */
     } else {
       displayMessage('No data available for channel ' + channelId);
     }
