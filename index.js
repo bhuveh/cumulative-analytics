@@ -132,7 +132,6 @@
       // To use a different date range, modify the ONE_MONTH_IN_MILLISECONDS
       // variable to a different millisecond delta as desired.
       var today = new Date();
-      var lastMonth = new Date(today.getTime() - 2592000000);
 
       // Request gets lifetime views, minutes, subscribers.
       var request1 = gapi.client.youtubeAnalytics.reports.query({
@@ -150,27 +149,10 @@
         metrics: 'views,estimatedMinutesWatched,subscribersGained,subscribersLost'
         //filters: 'video==' + videoId
       });
-
-      // Request gets lifetime views, minutes, subscribers.
-      var request2 = gapi.client.youtubeAnalytics.reports.query({
-        // The startDate and endDate parameters must be YYYY-MM-DD strings.
-        'startDate': formatDateString(lastMonth),
-        'endDate': formatDateString(today),
-        // At this time, you need to explicitly specify channel==channelId.
-        // See https://developers.google.com/youtube/analytics/v2/#ids
-        ids: 'channel==' + channelId,
-        dimensions: 'day',
-        sort: 'day',
-        // See https://developers.google.com/youtube/analytics/v2/available_reports
-        // for details about the different filters and metrics you can request
-        // if the "dimensions" parameter value is "day".
-        metrics: 'views,estimatedMinutesWatched,subscribersGained,subscribersLost'
-        //filters: 'video==' + videoId
-      });
       
       startDay = new Date(2018,1,1);
 
-      var request3 = gapi.client.youtubeAnalytics.reports.query({
+      var request5 = gapi.client.youtubeAnalytics.reports.query({
         // The startDate and endDate parameters must be YYYY-MM-DD strings.
         'startDate': formatDateString(startDay),
         'endDate': formatDateString(today),
@@ -187,7 +169,7 @@
         //filters: 'video==' + videoId
       });
 
-      // Exceute and display chart.
+      // Execute and display charts.
       request1.execute(function(response) {
         // This function is called regardless of whether the request succeeds.
         // The response contains YouTube Analytics data or an error message.
@@ -195,19 +177,7 @@
           displayMessage(response.error.message);
         } else {
           //console.log(response);
-          displayChart(response, 'chart1');
-        }
-      });
-      
-      // Exceute and display response.
-      request2.execute(function(response) {
-        // This function is called regardless of whether the request succeeds.
-        // The response contains YouTube Analytics data or an error message.
-        if ('error' in response) {
-          console.log(response.error.message);
-        } else {
-          //console.log(response);
-          displayChart(response, 'chart2');
+          displayCharts(response);
         }
       });
     } else {
@@ -236,7 +206,7 @@
   }
 
   // Call the Google Chart Tools API to generate a chart of Analytics data.
-  function displayChart(response, el) {
+  function displayCharts(response) {
     if ('rows' in response) {
       hideMessage();
       // console.log(response);
@@ -295,11 +265,24 @@
 
       var chartDataArray = [columns].concat(chart);
       var chartDataTable = google.visualization.arrayToDataTable(chartDataArray);
+
+      var today = new Date();
+      var last90 = new Date(today.getTime() - 3*2592000000);
+      var last60 = new Date(today.getTime() - 2*2592000000);
+      var last30 = new Date(today.getTime() - 2592000000);
+
+      var view90 = new google.visualization.DataView(chartDataTable);
+      view90.setRows(view90.getFilteredRows([{column: 0, minValue: last90}]));
+      var view60 = new google.visualization.DataView(chartDataTable);
+      view60.setRows(view60.getFilteredRows([{column: 0, minValue: last60}]));
+      var view30 = new google.visualization.DataView(chartDataTable);
+      view30.setRows(view30.getFilteredRows([{column: 0, minValue: last30}]));
+
+
       var formatter = new google.visualization.DateFormat({pattern: 'MMM d, yyyy'});
       formatter.format(chartDataTable, 0);
 
-      var chart = new google.visualization.LineChart(document.getElementById(el));
-      chart.draw(chartDataTable, {
+      var chartStyle = {
         // Additional options can be set if desired as described at:
         // https://developers.google.com/chart/interactive/docs/reference#visdraw
         legend: 'none',
@@ -344,7 +327,16 @@
           },
           baselineColor: '#fff4ec'
         }
-      });
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('chart1'));
+      chart.draw(chartDataTable, chartStyle);
+      var chart = new google.visualization.LineChart(document.getElementById('chart2'));
+      chart.draw(view90, chartStyle);
+      var chart = new google.visualization.LineChart(document.getElementById('chart3'));
+      chart.draw(view60, chartStyle);
+      var chart = new google.visualization.LineChart(document.getElementById('chart4'));
+      chart.draw(view30, chartStyle);
       
     } else {
       displayMessage('No data available for channel ' + channelId);

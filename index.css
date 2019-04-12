@@ -173,7 +173,7 @@ body {
   margin: 8px 5px 5px 5px;
 }
 
-#chart1, #chart2 {
+#chart1, #chart2, #chart3, #chart4  {
   width: 420px;
   height: 360px;
   margin: 0 auto;
